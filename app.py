@@ -11,6 +11,8 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 app = Flask(__name__)
 CORS(app) 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000, debug=True)
 
 def get_gemini_response(text):
     
