@@ -5,18 +5,15 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from flask_cors import CORS
 
-# Load environment variables
 load_dotenv()
 
-# Configure the Google Generative AI
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS to allow requests from the React frontend
+CORS(app) 
 
-# Function to get the response from the Gemini model
 def get_gemini_response(text):
-    # Modify the prompt to extract only the relevant fields
+    
     prompt = f"""
     Please extract the following details from the resume text: 
     Full Name, Email, Phone Number, Skills, LinkedIn URL, and GitHub URL. 
@@ -32,12 +29,11 @@ def get_gemini_response(text):
     {text}
     """
     
-    # Call Gemini model to generate the structured response
+    # Calling Gemini model
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(prompt)
     return response.text
 
-# Function to extract text from the uploaded PDF
 def extract_pdf_text(file):
     reader = pdf.PdfReader(file)
     text = ""
@@ -56,20 +52,17 @@ def process_pdf():
         return jsonify({"error": "No selected file"}), 400
 
     if file:
-        # Extract text from the uploaded PDF
+    
         extracted_text = extract_pdf_text(file)
 
-        # Get a structured response from Gemini
         response_text = get_gemini_response(extracted_text)
 
-        # Parse the response into structured fields
         data = parse_gemini_response(response_text)
 
         return jsonify(data)
 
     return jsonify({"error": "File upload failed"}), 500
 
-# Function to parse the Gemini response into structured data for the form
 def parse_gemini_response(response_text):
     data = {
         'fullName': '',
@@ -80,7 +73,6 @@ def parse_gemini_response(response_text):
         'github': ''
     }
 
-    # Parse the Gemini response line by line
     for line in response_text.splitlines():
         if 'Full Name:' in line:
             data['fullName'] = line.split('Full Name:')[1].strip()

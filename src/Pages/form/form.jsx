@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './form.css';
-import uploadGif from '../../assets//resume_search.gif'; // GIF for uploading resume
-import submitGif from '../../assets/submit1.gif'; // GIF for submitting form data
+import uploadGif from '../../assets//resume_search.gif'; 
+import submitGif from '../../assets/submit1.gif'; 
 
 const StudentForm = () => {
     const [formData, setFormData] = useState({
@@ -33,7 +33,7 @@ const StudentForm = () => {
             });
             const data = await response.json();
             
-            // Fill the form with the extracted text from the resume
+            
             setFormData({
                 fullName: data.fullName || formData.fullName,
                 email: data.email || formData.email,
@@ -56,9 +56,8 @@ const StudentForm = () => {
 
         setLoading(true);
 
-        // Handle form submission, e.g., send data to the backend.
         setTimeout(() => {
-            console.log("Submitted Details:",formData);  // Print form data to console after submission
+            console.log("Submitted Details:",formData); 
             setLoading(false);
             alert('Form submitted successfully');
         }, 2000);
