@@ -1,5 +1,5 @@
 Flask
 PyPDF2
-google-generative-ai
+google-generativeai
 python-dotenv
 flask-cors
